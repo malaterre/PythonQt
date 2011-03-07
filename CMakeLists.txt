@@ -28,6 +28,19 @@ ENDFOREACH()
 
 #-----------------------------------------------------------------------------
 project(PythonQt)
+
+set(PythonQt_MAJOR_VERSION 2)
+set(PythonQt_MINOR_VERSION 0)
+set(PythonQt_BUILD_VERSION 1)
+set(PythonQt_VERSION
+  "${PythonQt_MAJOR_VERSION}.${PythonQt_MINOR_VERSION}.${PythonQt_BUILD_VERSION}")
+set(PythonQt_API_VERSION
+  "${PythonQt_MAJOR_VERSION}.${PythonQt_MINOR_VERSION}")
+set(PythonQt_LIBRARY_PROPERTIES ${PythonQt_LIBRARY_PROPERTIES}
+  VERSION "${PythonQt_VERSION}"
+  SOVERSION "${PythonQt_API_VERSION}"
+)
+
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------
@@ -110,11 +123,11 @@ set(sources
     src/PythonQtSignalReceiver.cpp
     src/PythonQtSlot.cpp
     src/PythonQtStdDecorators.cpp
-    src/PythonQtStdIn.cpp
+    #src/PythonQtStdIn.cpp
     src/PythonQtStdOut.cpp
     src/gui/PythonQtScriptingConsole.cpp
     
-    generated_cpp/PythonQt_QtBindings.cpp
+    #generated_cpp/PythonQt_QtBindings.cpp
 
     generated_cpp/com_trolltech_qt_core_builtin/com_trolltech_qt_core_builtin0.cpp
     generated_cpp/com_trolltech_qt_core_builtin/com_trolltech_qt_core_builtin_init.cpp
@@ -142,12 +155,12 @@ set(headers
     src/PythonQtSignalReceiver.h
     src/PythonQtSlot.h
     src/PythonQtStdDecorators.h
-    src/PythonQtStdIn.h
+    #src/PythonQtStdIn.h
     src/PythonQtStdOut.h
     src/PythonQtSystem.h
     src/PythonQtVariants.h
-    src/dPython.h
-    generated_cpp/PythonQt_QtBindings.h
+    #src/dPython.h
+    #generated_cpp/PythonQt_QtBindings.h
 )
 
 #-----------------------------------------------------------------------------
@@ -220,6 +233,7 @@ add_library(PythonQt SHARED
             ${gen_qrc_sources}
   )
 set_target_properties(PythonQt PROPERTIES DEFINE_SYMBOL PYTHONQT_EXPORTS)
+set_target_properties(PythonQt PROPERTIES ${PythonQt_LIBRARY_PROPERTIES})
 
 #
 # That should solve linkage error on Mac when the project is used in a superbuild setup
